@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import BaseContainer from './components/BaseContainer.vue';
 
 export default {
@@ -13,13 +14,17 @@ export default {
     BaseContainer,
   },
   computed: {
-    counter() {
-      return this.$store.getters.finalCounter;
-    },
+    // counter() {
+    //   console.log(this.$store.getters.finalCount);
+    //   return this.$store.getters.finalCount;
+    // },
+    ...mapGetters({
+      counter: 'finalCount'
+    })
   },
   methods: {
     addOne() {
-      this.$store.commit('increment');
+      this.$store.dispatch('increment');
     },
   },
 };

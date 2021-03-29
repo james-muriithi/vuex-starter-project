@@ -10,14 +10,19 @@ const store = createStore({
       counter: 0
     };
   },
+  getters: {
+    finalCount: state => {
+      return state.counter;
+    }
+  },
   mutations: {
     increment(state) {
       state.counter++;
     }
   },
-  getters: {
-    finalCount(state) {
-      return state.counter;
+  actions: {
+    increment(context) {
+      context.commit('increment');
     }
   }
 });
