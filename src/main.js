@@ -5,40 +5,61 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App.vue';
 
 const app = createApp(App);
-const store = createStore({
+
+const counterModule = {
   state() {
     return {
       counter: 0,
-      isLoggedIn: false
-    };
-  },
-  getters: {
-    finalCount: state => {
-      return state.counter;
-    },
-    userIsAuthenticated(state){
-      return state.isLoggedIn
     }
   },
   mutations: {
     increment(state) {
       state.counter++;
     },
-    setAuth(state, payload) {
-      state.isLoggedIn = payload.isAuth;
-    }
+  },
+  getters: {
+    finalCount: state => {
+      return state.counter;
+    },
   },
   actions: {
     increment(context) {
       context.commit('increment');
     },
+  }
+};
+
+const authModule = {
+  state(){
+    return {
+      isLoggedIn: false
+    }
+  },
+  mutations: {
+    setAuth(state, payload) {
+      state.isLoggedIn = payload.isAuth;
+    }
+  },
+  actions: {
     login(context) {
       context.commit('setAuth', { isAuth: true });
     },
     logout(context) {
       context.commit('setAuth', { isAuth: false });
     }
+  },
+  getters: {
+    userIsAuthenticated(state){
+      return state.isLoggedIn
+    }
   }
+}
+
+const store = createStore({
+  modules: {
+    numbers: counterModule,
+    auth: authModule,
+  },
 });
 
 app.use(store);
