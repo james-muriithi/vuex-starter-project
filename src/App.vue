@@ -1,17 +1,24 @@
 <template>
-  <base-container title="Vuex">
+  <base-container title="Vuex" v-if="userIsAuthenticated">
+  <div class="dropdown-divider"></div>
     <h3>{{ counter }}</h3>
-    <button @click="addOne">Add 1</button>
+    <button class="btn btn-primary" @click="addOne">Add 1</button>
+  </base-container>
+  
+  <base-container title="Auth">
+    <user-auth></user-auth>
   </base-container>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import BaseContainer from './components/BaseContainer.vue';
+import UserAuth from "./components/UserAuth.vue";
 
 export default {
   components: {
     BaseContainer,
+    UserAuth
   },
   computed: {
     // counter() {
@@ -19,7 +26,8 @@ export default {
     //   return this.$store.getters.finalCount;
     // },
     ...mapGetters({
-      counter: 'finalCount'
+      counter: 'finalCount',
+      userIsAuthenticated: 'userIsAuthenticated'
     })
   },
   methods: {
